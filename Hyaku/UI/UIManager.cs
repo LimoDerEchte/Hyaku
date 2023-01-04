@@ -53,7 +53,6 @@ namespace Hyaku.UI
             ConnectButton.GetComponents<Button>()[0].onClick.AddListener(OnConnectClicked);
             SetErrorMessage(ErrorMessage);
             closeConnectUI();
-            Camera
         }
         
         public static void openConnectUI(string defaultIP)

@@ -22,6 +22,7 @@ namespace Hyaku.Networking
         public int myId = 0;
         public string username = "InvalidUName";
         public string password = "";
+        public string lobby = "Test";
         public TCP tcp;
 
         private bool isConnected = false;

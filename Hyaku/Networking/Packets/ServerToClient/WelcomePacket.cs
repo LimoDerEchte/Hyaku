@@ -15,7 +15,7 @@ namespace Hyaku.Networking.Packets.ServerToClient
             int myID = packet.ReadInt();
             Client.instance.myId = myID;
             MelonLogger.Msg("Got Information from Server - Sending own Information");
-            new ClientToServer.WelcomePacket(Client.instance.username, Hashing.GetHashString(Client.instance.password), myID).Send();
+            new ClientToServer.WelcomePacket(Client.instance.username, Hashing.GetHashString(Client.instance.password), Client.instance.lobby, myID).Send();
         }
     }
 }
