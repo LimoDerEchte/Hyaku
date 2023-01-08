@@ -7,6 +7,7 @@ namespace Hyaku.Networking.Packets.Bidirectional
         
         public override void Send()
         {
+            PacketHandler.SendTcpData(Packet);
         }
     }
     

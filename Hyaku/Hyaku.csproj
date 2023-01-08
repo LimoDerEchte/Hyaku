@@ -539,7 +539,7 @@
         <Compile Include="Networking\Packets\ServerToClient\KickPacket.cs" />
         <Compile Include="Networking\Packets\ServerToClient\SpawnPlayerPacket.cs" />
         <Compile Include="Networking\Packets\ServerToClient\WelcomePacket.cs" />
-        <Compile Include="Patches\AnimationState.cs" />
+        <Compile Include="Patches\AchievmentPatch.cs" />
         <Compile Include="Patches\DoorPatch.cs" />
         <Compile Include="Patches\ProgressionProviderPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

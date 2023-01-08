@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Hyaku.Utility;
 using MelonLoader;
@@ -42,13 +43,21 @@ namespace Hyaku.Networking.Packets
 
         public void Handle(Packet packet)
         {
-            ServerBound[packet.ReadInt()].handle(packet);
+            try
+            {
+                ServerBound[packet.ReadInt()].handle(packet);
+            }
+            catch (Exception e)
+            {
+                MelonLogger.Warning($"Error while handling {packet.GetType().Name}");
+            }
         }
         
         public static void SendTcpData(Packet packet)
         {
             packet.WriteLength();
-            Client.instance.tcp.SendData(packet);
+            if(Client.instance != null && Client.instance.tcp != null && Client.instance.tcp.socket != null)
+                Client.instance.tcp.SendData(packet);
         }
     }
 }

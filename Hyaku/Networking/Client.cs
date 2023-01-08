@@ -1,6 +1,6 @@
 using System;
-using System.Net;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using Hyaku.GameManagement;
 using Hyaku.Networking.Packets;
 using Hyaku.UI;
@@ -8,12 +8,14 @@ using Hyaku.Utility;
 using MelonLoader;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace Hyaku.Networking
 {
     public class Client : MonoBehaviour
     {
+        public static readonly Regex NameRegex = new Regex("^[a-zA-Z0-9_-]{3,16}$");
+        public static readonly Regex LobbyNameRegex = new Regex("^[a-zA-Z0-9_-]{2,32}$");
+        
         public static Client instance;
         public static int dataBufferSize = 4096;
 
@@ -80,7 +82,7 @@ namespace Hyaku.Networking
                 if (!socket.Connected)
                 {
                     UIManager.ErrorMessage = "Timed out";
-                    UIManager.openConnectUI(instance.ip);
+                    UIManager.OpenConnectUI(instance.ip);
                     return;
                 }
                 GameLogic.KickCountdown = -1;

@@ -2,7 +2,6 @@ C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\Hyaku.dll
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\Hyaku.pdb
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\0Harmony.dll
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\Assembly-CSharp.dll
-C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\MelonLoader.dll
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\UnityEngine.CoreModule.dll
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\Mono.Cecil.dll
 C:\Users\Limo\RiderProjects\Hyaku\Hyaku\bin\Debug\MonoMod.Utils.dll

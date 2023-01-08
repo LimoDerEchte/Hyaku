@@ -24,7 +24,7 @@ namespace Hyaku.GameManagement
                     {
                         if (Heroes.ContainsKey(info.ClientID))
                         {
-                            if (Heroes[info.ClientID] == null || Heroes[info.ClientID].gameObject == null)
+                            if (Heroes[info.ClientID] == null || Heroes[info.ClientID].gameObject == null || Heroes[info.ClientID].gameObject.transform == null)
                                 SpawnPlayer(info.Username, info.ClientID, Vector3.zero);
                         }
                         else
@@ -57,7 +57,7 @@ namespace Hyaku.GameManagement
             }
             else
             {
-                if (Heroes[clientID] != null && Heroes[clientID].gameObject != null) DestroyImmediate(Heroes[clientID].gameObject);
+                if (Heroes[clientID] != null && Heroes[clientID].gameObject != null && Heroes[clientID].gameObject.transform != null) DestroyImmediate(Heroes[clientID].gameObject);
                 Heroes[clientID] = OnlineHero.createOnlineHero(username, clientID, spawnLocation);
             }
         }

@@ -23,6 +23,9 @@ namespace Hyaku.GameManagement
         
         public static void FixedUpdate()
         {
+            if(Client.instance == null || Client.instance.tcp == null || Client.instance.tcp.socket == null)
+                return;
+            
             if (KickCountdown > 0)
             {
                 KickCountdown--;
@@ -32,7 +35,7 @@ namespace Hyaku.GameManagement
                     UIManager.ErrorMessage = "Timed out";
                     Client.instance.tcp.socket.Close();
                     Client.instance.tcp.socket = null;
-                    UIManager.openConnectUI(Client.instance.ip);
+                    UIManager.OpenConnectUI(Client.instance.ip);
                 }
             }
             

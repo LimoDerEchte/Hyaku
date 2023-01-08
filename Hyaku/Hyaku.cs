@@ -9,16 +9,17 @@ using Hyaku.Networking.Packets.Bidirectional;
 using Hyaku.UI;
 using MelonLoader;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Hyaku
 {
     public static class BuildInfo
     {
         public const string Name = "Hyaku";
-        public const string Description = "Hyaku is a mod that tries to add online multiplayer support to the game"; 
+        public const string Description = "Hyaku is a mod that tries to add online multiplayer support to the game Reventure"; 
         public const string Author = "LimoDerEchte"; 
         public const string Company = "Lime"; 
-        public const string Version = "0.1.3"; 
+        public const string Version = "0.2.0"; 
         public const string DownloadLink = "https://www.nexusmods.com/reventure/mods/1"; 
     }
     
@@ -27,41 +28,51 @@ namespace Hyaku
         public static bool CollectingEnabled = true;
         public static event Action GameplaySceneLoaded;
         public static String LastSceneInit;
-        private static bool SkinUpdateNextFrame;
+        private static bool _skinUpdateNextFrame;
+
+        public static readonly string DefaultIP = false ? "127.0.0.1" : "202.61.198.7";
+        public static readonly int DefaultPort = 26950;
+        public static readonly int DefaultQueryPort = 26951;
 
         public override void OnApplicationStart()
         {
             AssetManager.Init();
-            UIManager.InitUI();
             MelonLogger.Msg("Mod initialized!");
         }
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
-            if(sceneName != LastSceneInit)
-                UIManager.InitUI();
             if (sceneName == "2.Title")
             {
+                UIManager.InitUI();
                 if(Client.instance == null)
                     LoadClasses();
                 if(Client.instance.tcp != null)
                     Client.instance.Disconnect();
                 PlayerManager.Instance.Reset();
-                UIManager.openConnectUI("");
-            }else 
-                UIManager.closeConnectUI();
+                UIManager.OpenConnectUI("");
+            }
+
+            if (Client.instance == null || Client.instance.tcp == null || Client.instance.tcp.socket == null)
+            {
+                LastSceneInit = sceneName;
+                return;
+            }
+
+            if(sceneName != LastSceneInit && sceneName != "2.Title")
+                UIManager.InitUI();
             if (sceneName == "5.Gameplay")
             {
                 if (LastSceneInit != "5.Gameplay")
                 {
                     OnlineHero.InitScene();
                     if (GameplaySceneLoaded != null) GameplaySceneLoaded.Invoke();
-                    UIManager.openChat();
+                    UIManager.OpenChat();
                     new SkinUpdatePacketC2S().Send();
                     Core.Get<IHeroSkinsService>().onSpritesChange += sprites =>
                     {
                         if (Client.instance != null && Client.instance.tcp != null)
-                            SkinUpdateNextFrame = true;
+                            _skinUpdateNextFrame = true;
                     };
                 }
             }
@@ -79,22 +90,23 @@ namespace Hyaku
         {
             GameLogic.Update();
             //UIManager.Update();
-            if (SkinUpdateNextFrame)
+            if (_skinUpdateNextFrame)
             {
                 new SkinUpdatePacketC2S().Send();
-                SkinUpdateNextFrame = false;
+                _skinUpdateNextFrame = false;
             }
         }
 
         public override void OnFixedUpdate()
         {
             GameLogic.FixedUpdate();
+            UIManager.FixedUpdate();
         }
 
         private void LoadClasses()
         {
             GameObject hyaku = new GameObject("HyakuScriptHolder");
-            GameObject.DontDestroyOnLoad(hyaku);
+            Object.DontDestroyOnLoad(hyaku);
             hyaku.AddComponent<PacketHandler>();
             hyaku.AddComponent<PlayerManager>();
             hyaku.AddComponent<Client>();

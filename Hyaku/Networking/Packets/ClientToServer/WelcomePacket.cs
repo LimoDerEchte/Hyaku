@@ -21,7 +21,7 @@ namespace Hyaku.Networking.Packets.ClientToServer
         public override void Send()
         {
             Packet.Write(MyID);
-            Packet.Write(BuildInfo.Version);
+            Packet.Write(BuildInfo.Version + "-Dev-1");
             Packet.Write(Username);
             Packet.Write(Password);
             Packet.Write(Lobby);
